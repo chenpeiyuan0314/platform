@@ -11,7 +11,7 @@ public class TestController {
 	
 	@RequestMapping("info.html")
 	public String infoHtml() {
-		return "info";
+		return "test/info";
 	}
 	
 	@ResponseBody
