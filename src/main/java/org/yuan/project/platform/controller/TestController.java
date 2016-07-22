@@ -22,7 +22,7 @@ public class TestController {
 		result.setCode(0);
 		result.setInfo("调用成功");
 		//result.setData();
-		
+		System.out.println("result.info.json");
 		return result;
 	}
 }

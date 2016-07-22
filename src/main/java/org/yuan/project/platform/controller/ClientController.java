@@ -12,8 +12,6 @@ import org.yuan.project.platform.helper.CodeHelper;
 import org.yuan.project.platform.helper.DateHelper;
 import org.yuan.project.platform.model.ClientJson;
 import org.yuan.project.platform.model.ResultJson;
-import org.yuan.project.platform.other.CheckExceptionMessage;
-import org.yuan.project.platform.other.CheckRuntimeException;
 
 @Controller
 @RequestMapping("/v1/client")
