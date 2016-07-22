@@ -43,9 +43,9 @@
   </appender>
 
   <!-- 输出日志到文件 -->
-  <appender name="inf.log" class="org.apache.log4j.FileAppender">
+  <appender name="debug.log" class="org.apache.log4j.FileAppender">
     <param name="File" value="${webapp.root}/logs/inf.log"/>
-    <param name="Threshold" value="info"/>
+    <param name="Threshold" value="debug"/>
     <param name="Append" value="true"/>
     <layout class="org.apache.log4j.PatternLayout">
       <param name="ConversionPattern"
@@ -56,14 +56,14 @@
   <!-- 定义全局的日志输出级别,但是在输出目的地的配置中配置的具体输出级别优先级高于全局定义的优先级。 如果在railyFile中定义<param 
     name="Threshold" value="info"></param>，那么将会把info以上级别的信息输出 -->
   <root>
-    <priority value="debug" />
+    <priority value="all" />
     <appender-ref ref="console" />
-    <appender-ref ref="inf.log" />
+    
     <!-- 
+    <appender-ref ref="debug.log" />
     <appender-ref ref="dailyRollingFile" />
     <appender-ref ref="railyFile" />
     -->
-    
   </root>
 
 </log4j:configuration>   
