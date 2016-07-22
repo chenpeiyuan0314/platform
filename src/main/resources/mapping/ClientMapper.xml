@@ -84,13 +84,32 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <!-- 手动添加 -->
+  <!-- 手动添加代码-->
   
+  <!-- 
+            根据条件查询记录总数
+   -->
   <select id="selectCount" 
-    resultMap="java.lang.Integer"
+    resultType="java.lang.Integer"
     parameterType="java.util.Map">
     SELECT
       COUNT(1)
+    FROM client
+    <where>
+      <if test="phone != null">
+        phone = #{phone}
+      </if>
+    </where>
+  </select>
+  
+  <!-- 
+           根据条件查询唯一记录
+   -->
+  <select id="selectSole" 
+    resultMap="BaseResultMap"
+    parameterType="java.util.Map">
+    SELECT
+      <include refid="Base_Column_List" />
     FROM client
     <where>
       <if test="phone != null">
@@ -100,5 +119,7 @@
         password = #{password}
       </if>
     </where>
+    where id = #{id,jdbcType=INTEGER}
   </select>
+  
 </mapper>

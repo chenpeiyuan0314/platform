@@ -18,6 +18,7 @@ public class CheckExceptionMessage {
 	public static final int CODE_10003 = 10003;
 	public static final int CODE_10004 = 10004;
 	public static final int CODE_10005 = 10005;
+	public static final int CODE_10006 = 10006;
 	
 	//-------------------------------------------------------
 	// 错误信息
@@ -34,6 +35,7 @@ public class CheckExceptionMessage {
 		INFO.put(CODE_10003, "密码必须包含数字和字母");
 		INFO.put(CODE_10004, "用户名已经被注册");
 		INFO.put(CODE_10005, "用户名或密码错误");
+		INFO.put(CODE_10006, "用户令牌已经失效");
 	}
 	
 	/**

@@ -37,12 +37,35 @@ public class ClientManagerImpl extends BaseManagerImpl implements ClientManager 
 		int count = tokenMapper.updateByPrimaryKeySelective(token);
 		return count;
 	}
+	
+	@Override
+	public Token selectToken(String code, String date) {
+		Map<String,Object> args = new HashMap<String,Object>();
+		args.put("code", code);
+		args.put("date", date);
+		Token token = tokenMapper.selectSole(args);
+		return token;
+	}
 
 	@Override
-	public boolean selectExists(String username, String password) {
+	public Client selectClient(String phone, String password) {
+		Map<String,Object> args = new HashMap<String,Object>();
+		args.put("phone", phone);
+		args.put("password", password);
+		Client client = clientMapper.selectSole(args);
+		return client;
+	}
+
+	@Override
+	public Client selectClient(Integer id) {
+		Client client = clientMapper.selectByPrimaryKey(id);
+		return client;
+	}
+
+	@Override
+	public boolean selectExists(String username) {
 		Map<String,Object> args = new HashMap<String,Object>();
 		args.put("phone", username);
-		args.put("password", password);
 		int count = clientMapper.selectCount(args);
 		return count == 1 ? true : false;
 	}

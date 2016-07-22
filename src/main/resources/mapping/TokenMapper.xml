@@ -90,4 +90,24 @@
       abade_date = #{abadeDate,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <!-- 
+          根据条件查询唯一记录
+   -->
+  <select id="selectSole" 
+    resultMap="BaseResultMap" 
+    parameterType="java.util.Map" >
+    SELECT
+      <include refid="Base_Column_List" />
+    FROM token
+    <where>
+      <if test="code != null">
+        AND code = #{code}
+      </if>
+      <if test="date != null">
+        AND abade_date > #{date}
+      </if>
+    </where>
+  </select>
+  
 </mapper>

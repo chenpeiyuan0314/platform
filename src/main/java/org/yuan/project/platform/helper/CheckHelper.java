@@ -1,10 +1,23 @@
 package org.yuan.project.platform.helper;
 
-import static org.yuan.project.platform.other.CheckExceptionMessage.*;
+import static org.yuan.project.platform.other.CheckExceptionMessage.CODE_10001;
+import static org.yuan.project.platform.other.CheckExceptionMessage.CODE_10002;
+import static org.yuan.project.platform.other.CheckExceptionMessage.CODE_10003;
+import static org.yuan.project.platform.other.CheckExceptionMessage.CODE_10004;
+import static org.yuan.project.platform.other.CheckExceptionMessage.CODE_10005;
+import static org.yuan.project.platform.other.CheckExceptionMessage.CODE_10006;
 
+import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.yuan.project.platform.entity.Client;
+import org.yuan.project.platform.entity.Token;
+import org.yuan.project.platform.manager.ClientManager;
 import org.yuan.project.platform.other.CheckRuntimeException;
 
 public class CheckHelper {
+	@Autowired
+	private static ClientManager clientManager;
 
 	/**
 	 * 验证手机好吗
@@ -31,11 +44,42 @@ public class CheckHelper {
 	}
 	
 	/**
-	 * 验证
+	 * 验证令牌
 	 * @param code
+	 * @return
 	 */
-	public static void checkToken(String code) {
-
+	public static Token checkToken(String code) {
+		String dateStr = DateHelper.format(new Date(), DateHelper.FMT_DATETIMEMS);
+		Token token = clientManager.selectToken(code, dateStr);
+		if(token == null) {
+			throw new CheckRuntimeException(CODE_10006);
+		}
+		return token;
+	}
+	
+	/**
+	 * 验证登录
+	 * @param username
+	 * @param password
+	 * @return
+	 */
+	public static Client checkLogin(String username, String password) {
+		Client client = clientManager.selectClient(username, password);
+		if(client == null) {
+			throw new CheckRuntimeException(CODE_10005);
+		}
+		return client;
+	}
+	
+	/**
+	 * 验证注册
+	 * @param username
+	 */
+	public static void checkRegister(String username) {
+		boolean exists = clientManager.selectExists(username);
+		if(exists) {
+			throw new CheckRuntimeException(CODE_10004);
+		}
 	}
 	
 }

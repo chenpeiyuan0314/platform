@@ -28,4 +28,12 @@ public interface ClientMapper {
      * @return
      */
     int selectCount(Map<String,Object> args);
+    
+    /**
+     * 根据条件查询记录
+     * @param args
+     * 		电话(phone),密码(password)
+     * @return
+     */
+    Client selectSole(Map<String,Object> args);
 }
