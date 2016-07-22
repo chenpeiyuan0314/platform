@@ -4,45 +4,55 @@
       "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
 <generatorConfiguration>
+  <!-- 引入外部的配置文件 -->
+  <properties resource="config.properties"/>
+  
+  <!-- 引入数据库驱动包  -->
   <classPathEntry
-    location="C:\Users\Administrator\.m2\repository\mysql\mysql-connector-java\5.1.38\mysql-connector-java-5.1.38.jar" />
+    location="${jdbc.jar}" />
 
+  <!--  -->
   <context id="MySql" targetRuntime="MyBatis3" defaultModelType="flat">
+    <!-- 代码注释-->
     <commentGenerator>
-      <property name="" value=""/>
+      <!-- 注释时间戳 -->
+      <property name="suppressDate" value="true"/>
+      <!-- 代码注释-->
       <property name="suppressAllComments" value="true" />
     </commentGenerator>
 
-    <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-      connectionURL="jdbc:mysql://localhost:3306/mine?characterEncoding=utf8"
-      userId="root" password="root">
-    </jdbcConnection>
+    <!-- 数据库链接 -->
+    <jdbcConnection driverClass="${jdbc.dri}"
+      connectionURL="${jdbc.url}" userId="${jdbc.usr}" password="${jdbc.pwd}"/>
 
+    <!-- 类型转换 -->
     <javaTypeResolver>
       <property name="forceBigDecimals" value="false" />
     </javaTypeResolver>
 
-    <!-- entity -->
-    <javaModelGenerator targetPackage="com.mybatis.model"
+    <!-- 实体类 -->
+    <javaModelGenerator targetPackage="org.yuan.project.platform.entity"
       targetProject="src/main/java">
       <property name="enableSubPackages" value="true" />
-      <property name="trimStrings" value="true" />
     </javaModelGenerator>
-    <!-- mapping -->
-    <sqlMapGenerator targetPackage="sqlmap"
+    
+    <!-- 映射文件 -->
+    <sqlMapGenerator targetPackage="mapping"
       targetProject="src/main/resources">
       <property name="enableSubPackages" value="true" />
     </sqlMapGenerator>
-    <!-- client -->
+    
+    <!-- 接口类 -->
     <javaClientGenerator type="XMLMAPPER"
-      targetPackage="com.mybatis.mapper" targetProject="src/main/java">
+      targetPackage="org.yuan.project.platform.mapper" 
+      targetProject="src/main/java">
       <property name="enableSubPackages" value="true" />
     </javaClientGenerator>
     
-    <!--  -->
-    <table tableName="%" enableCountByExample="false"
-      enableSelectByExample="false" enableUpdateByExample="false"
-      enableDeleteByExample="false">
+    <!-- 数据表配置 -->
+    <table tableName="%" 
+      enableCountByExample="false" enableSelectByExample="false" 
+      enableUpdateByExample="false" enableDeleteByExample="false">
     </table>
   </context>
 

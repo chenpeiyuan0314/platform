@@ -15,8 +15,53 @@
     http://www.springframework.org/schema/context 
     http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-  <!-- 设置使用注解的类所在的jar包 -->
-  <context:component-scan base-package="org.yuan.project.platform"/>
+  <!-- 引入属性文件 -->
+  <context:property-placeholder location="classpath:/config.properties" />
+  
+  <!-- 数据源 -->
+  <bean name="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    <property name="driverClassName" value="${jdbc.dri}" />
+    <property name="url" value="${jdbc.url}" />
+    <property name="username" value="${jdbc.usr}" />
+    <property name="password" value="${jdbc.pwd}" />
+  </bean>
+  
+  <!-- mybatis文件 -->
+  <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <property name="dataSource" ref="dataSource" />
+    <!-- 自动扫描entity目录, 省掉Configuration.xml里的手工配置 -->
+    <property name="mapperLocations" value="classpath:/mapping/*.xml" />
+    <!-- 
+    <property name="plugins">
+      <bean class="com.cmcc.common.db.mybatis.page.interceptor.PaginationInterceptor">
+        <property name="properties">
+          <props>
+            <prop key="dialect">${system.jdbc.type}</prop>
+          </props>
+        </property>
+      </bean>
+    </property>
+     -->
+  </bean>
+  
+  <!-- 接口类扫描 -->
+  <bean name="mapperScannerConfigurer"  class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    <property name="basePackage" value="org.yuan.project.platform.mapper" />
+  </bean>
+  
+  <!-- 配置事务管理器 -->
+  <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <property name="dataSource" ref="dataSource" />
+  </bean>
+
+  <!-- 注解方式配置事务 -->
+  <tx:annotation-driven transaction-manager="transactionManager" />
+
+  <!-- 扫描持久层 -->
+  <context:component-scan base-package="org.yuan.project.platform.manager" />
+  
+  <!-- 扫描控制层 -->
+  <context:component-scan base-package="org.yuan.project.platform.controller" />
 
   <!-- JspViewResolver -->
   <bean id="jspViewResolver"
