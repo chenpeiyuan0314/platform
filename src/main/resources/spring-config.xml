@@ -63,6 +63,10 @@
   <!-- 扫描持久层 -->
   <context:component-scan base-package="org.yuan.project.platform.manager" />
   
+  <bean class="org.yuan.project.platform.helper.CheckHelper">
+    <property name="clientManager" ref="clientManager"/>
+  </bean>
+  
   <!-- 扫描控制层 -->
   <context:component-scan base-package="org.yuan.project.platform.controller" />
 
@@ -91,9 +95,10 @@
     </property>
   </bean>
 
-  <!-- 拦截器 -->
+  <!-- 拦截器 
   <mvc:interceptors>  
     <bean class="org.yuan.project.platform.other.LogInterceptor"/>  
   </mvc:interceptors>
+  -->
   
 </beans>

@@ -31,7 +31,12 @@
       <id>oschina</id>
       <url>http://www.oschina.net/news/44282/oschina-maven-repository</url>
     </repository>
-    
+    <repository>
+      <id>JBoss repository 2</id>
+      <url> http://repository.jboss.org/maven2/</url>
+    </repository>
+   
+
     <repository>
       <id>one</id>
       <url>http://people.apache.org/repo/m2-snapshot-repository</url>
@@ -65,10 +70,10 @@
       <url>http://snapshots.repository.codehaus.org/</url>
     </repository>
     <repository>
-      <id>eight</id>
+      <id>nine</id>
       <url>http://maven.net.cn/content/groups/public/</url>
     </repository>
-    
+
   </repositories>
 
   <properties>
@@ -226,13 +231,11 @@
       <artifactId>jstl</artifactId>
       <version>1.2</version>
     </dependency>
-    <!--
     <dependency>
       <groupId>javax.portlet</groupId>
       <artifactId>portlet-api</artifactId>
       <version>2.0</version>
     </dependency>
--->
 
     <!-- log4j -->
     <dependency>
@@ -277,6 +280,28 @@
       <artifactId>jackson-annotations</artifactId>
       <version>2.1.0</version>
     </dependency>
+    <dependency>
+      <groupId>com.jayway.jsonpath</groupId>
+      <artifactId>json-path</artifactId>
+      <version>2.2.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish</groupId>
+      <artifactId>javax.json</artifactId>
+      <version>1.0.4</version>
+    </dependency>
+    <dependency>
+      <groupId>com.googlecode.json-simple</groupId>
+      <artifactId>json-simple</artifactId>
+      <version>1.1.1</version>
+    </dependency>
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>fastjson</artifactId>
+      <version>1.2.7</version>
+    </dependency>
+
+
 
     <!-- commons -->
     <dependency>
@@ -353,7 +378,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>2.3.2</version>
+        <version>3.1</version>
         <configuration>
           <source>1.8</source>
           <target>1.8</target>

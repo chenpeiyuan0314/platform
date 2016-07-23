@@ -6,19 +6,18 @@ import static org.yuan.project.platform.other.CheckExceptionMessage.CODE_10003;
 import static org.yuan.project.platform.other.CheckExceptionMessage.CODE_10004;
 import static org.yuan.project.platform.other.CheckExceptionMessage.CODE_10005;
 import static org.yuan.project.platform.other.CheckExceptionMessage.CODE_10006;
+import static org.yuan.project.platform.other.CheckExceptionMessage.CODE_10007;
+import static org.yuan.project.platform.other.CheckExceptionMessage.CODE_10010;
+import static org.yuan.project.platform.other.CheckExceptionMessage.CODE_10011;
 
 import java.util.Date;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.yuan.project.platform.entity.Client;
 import org.yuan.project.platform.entity.Token;
 import org.yuan.project.platform.manager.ClientManager;
 import org.yuan.project.platform.other.CheckRuntimeException;
 
 public class CheckHelper {
-	@Autowired
-	private static ClientManager clientManager;
-
 	/**
 	 * 验证手机好吗
 	 * @param phone
@@ -34,12 +33,42 @@ public class CheckHelper {
 	 * @param password
 	 */
 	public static void checkPassword(String password) {
-		if(password == null || !password.matches("^.{6,20}&")) {
+		if(password == null || !password.matches("^.{6,20}$")) {
 			throw new CheckRuntimeException(CODE_10002);
 		}
-		if(password.matches("[^0-9a-zA-Z]+") || 
-			!(password.matches("[0-9]+") && password.matches("[a-zA-Z]+"))) {
+		
+		boolean hasAlpha = false;
+		boolean hasDigit = false;
+		for(char ch : password.toCharArray()) {
+			if(hasAlpha && hasDigit) {
+				return;
+			}
+			if(Character.isLetter(ch)) {
+				hasAlpha = true;
+				continue;
+			}
+			if(Character.isDigit(ch)) {
+				hasDigit = true;
+				continue;
+			}
 			throw new CheckRuntimeException(CODE_10003);
+		}
+	}
+	
+	/**
+	 * 验证账号名称
+	 * @param password
+	 */
+	public static void checkUsername(String username) {
+		if(username == null || !username.matches("^.{6,20}$")) {
+			throw new CheckRuntimeException(CODE_10010);
+		}
+		
+		for(char ch : username.toCharArray()) {
+			if(Character.isLetter(ch)) {
+				continue;
+			}
+			throw new CheckRuntimeException(CODE_10011);
 		}
 	}
 	
@@ -49,6 +78,9 @@ public class CheckHelper {
 	 * @return
 	 */
 	public static Token checkToken(String code) {
+		if(isBlank(code)) {
+			throw new CheckRuntimeException(CODE_10007);
+		}
 		String dateStr = DateHelper.format(new Date(), DateHelper.FMT_DATETIMEMS);
 		Token token = clientManager.selectToken(code, dateStr);
 		if(token == null) {
@@ -81,5 +113,24 @@ public class CheckHelper {
 			throw new CheckRuntimeException(CODE_10004);
 		}
 	}
+
+	/**
+	 * 判断字符串是否为空
+	 * @param s
+	 * @return
+	 */
+	private static boolean isBlank(String s) {
+		if(s == null) {
+			return true;
+		}
+		if(s.trim().length() == 0) {
+			return true;
+		}
+		return false;
+	}
 	
+	private static ClientManager clientManager;
+	public void setClientManager(ClientManager clientManager) {
+		CheckHelper.clientManager = clientManager;
+	}
 }
