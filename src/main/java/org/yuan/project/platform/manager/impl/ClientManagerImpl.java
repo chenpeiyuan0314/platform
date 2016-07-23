@@ -10,7 +10,7 @@ import org.yuan.project.platform.entity.Token;
 import org.yuan.project.platform.helper.CodeHelper;
 import org.yuan.project.platform.manager.ClientManager;
 
-@Service
+@Service("clientManager")
 @Transactional
 public class ClientManagerImpl extends BaseManagerImpl implements ClientManager {
 

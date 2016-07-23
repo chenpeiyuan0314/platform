@@ -62,6 +62,7 @@ public class BaseController {
 			String info = CheckExceptionMessage.getInfo(code);
 			result.setInfo(info);
 		}
+		LOG.error(e, e);
 	}
 	
 	private static final Logger LOG = Logger.getLogger(BaseController.class);

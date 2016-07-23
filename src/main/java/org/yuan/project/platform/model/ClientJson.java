@@ -25,7 +25,7 @@ public class ClientJson {
 			setUsername(client.getUsername());
 		}
 		
-		String phone = client.getPassword();
+		String phone = client.getPhone();
 		phone = phone.substring(0,3) + "****" + phone.substring(7, 11);
 		setUsername(phone);
 	}

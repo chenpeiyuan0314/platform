@@ -7,7 +7,7 @@ public class ResultJson {
 
 	public ResultJson() {
 		code = 0;
-		info = "";
+		info = "操作成功";
 		data = new HashMap<String,Object>();
 	}
 	

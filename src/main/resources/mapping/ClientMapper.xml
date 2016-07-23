@@ -97,7 +97,7 @@
     FROM client
     <where>
       <if test="phone != null">
-        phone = #{phone}
+        AND phone = #{phone}
       </if>
     </where>
   </select>
@@ -113,13 +113,12 @@
     FROM client
     <where>
       <if test="phone != null">
-        phone = #{phone}
+        AND phone = #{phone}
       </if>
       <if test="password != null">
-        password = #{password}
+        AND password = #{password}
       </if>
     </where>
-    where id = #{id,jdbcType=INTEGER}
   </select>
   
 </mapper>

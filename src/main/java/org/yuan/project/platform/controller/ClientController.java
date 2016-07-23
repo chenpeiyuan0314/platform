@@ -49,6 +49,12 @@ public class ClientController extends BaseController {
 			token.setAbadeDate(DateHelper.format(date, DateHelper.FMT_DATETIMEMS));
 			clientManager.insertSelective(token);
 			
+			// 返回用户信息
+			ClientJson clientJson = new ClientJson();
+			clientJson.setUsername(client);
+			clientJson.setToken(token.getCode());
+			result.getData().put("client", clientJson);
+			
 		} catch(Exception e) {
 			exc(result, e);
 		}
@@ -59,55 +65,95 @@ public class ClientController extends BaseController {
 	
 	@ResponseBody
 	@RequestMapping("register.json")
-	public ResultJson registerJson(String username, String password) {
-		// 校验参数 - 电话、密码、已经注册
-		CheckHelper.checkPhone(username);
-		CheckHelper.checkRegister(username);
-		CheckHelper.checkPassword(password);
-		
-		// 添加用户对象
-		Client client = new Client();
-		client.setPhone(username);
-		client.setPassword(password);
-		clientManager.insertSelective(client);
-		
+	public ResultJson registerJson(HttpServletRequest request) {
 		ResultJson result = new ResultJson();
+		
+		try {
+			
+			log(request);
+			
+			// 获取参数
+			String username = request.getParameter("username");
+			String password = request.getParameter("password");
+			
+			// 校验参数 - 电话、密码、已经注册
+			CheckHelper.checkPhone(username);
+			CheckHelper.checkRegister(username);
+			CheckHelper.checkPassword(password);
+			
+			// 添加用户对象
+			Client client = new Client();
+			client.setPhone(username);
+			client.setPassword(password);
+			clientManager.insertSelective(client);
+			
+		} catch(Exception e) {
+			exc(result, e);
+		}
+		
+		log(result);
 		return result;
 	}
 	
 	@ResponseBody
 	@RequestMapping("logout.json")
-	public ResultJson logoutJson(String code) {
-		// 验证参数 - 令牌
-		Token token = CheckHelper.checkToken(code);
-		
-		// 更新token的过期时间
-		String dateStr = DateHelper.format(new Date(), DateHelper.FMT_DATETIMEMS);
-		Token record = new Token();
-		record.setId(token.getId());
-		record.setAbadeDate(dateStr);
-		clientManager.updateSelective(token);
-		
+	public ResultJson logoutJson(HttpServletRequest request) {
 		ResultJson result = new ResultJson();
+		
+		try {
+			
+			log(request);
+			
+			// 获取参数
+			String code = request.getParameter("token");
+			
+			// 验证参数 - 令牌
+			Token token = CheckHelper.checkToken(code);
+			
+			// 更新token的过期时间
+			String dateStr = DateHelper.format(new Date(), DateHelper.FMT_DATETIMEMS);
+			Token record = new Token();
+			record.setId(token.getId());
+			record.setAbadeDate(dateStr);
+			clientManager.updateSelective(token);
+			
+		} catch(Exception e) {
+			exc(result, e);
+		}
+		
+		log(result);
 		return result;
 	}
 	
 	@ResponseBody
 	@RequestMapping("detail.json")
-	public ResultJson detailJson(String code) {
-		// 验证参数 - 令牌
-		Token token = CheckHelper.checkToken(code);
-		
-		// 获取用户信息
-		Client client = clientManager.selectClient(token.getClientId());
-		
-		// 返回用户信息
-		ClientJson clientJson = new ClientJson();
-		clientJson.setUsername(client);
-		clientJson.setToken(token.getCode());
-		
+	public ResultJson detailJson(HttpServletRequest request) {
 		ResultJson result = new ResultJson();
-		result.getData().put("client", clientJson);
+		
+		try {
+			
+			log(request);
+			
+			// 获取参数
+			String code = request.getParameter("token");
+			
+			// 验证参数 - 令牌
+			Token token = CheckHelper.checkToken(code);
+			
+			// 获取用户信息
+			Client client = clientManager.selectClient(token.getClientId());
+			
+			// 返回用户信息
+			ClientJson clientJson = new ClientJson();
+			clientJson.setUsername(client);
+			clientJson.setToken(token.getCode());
+			result.getData().put("client", clientJson);
+			
+		} catch(Exception e) {
+			exc(result, e);
+		}
+		
+		log(result);
 		return result;
 	}
 }
