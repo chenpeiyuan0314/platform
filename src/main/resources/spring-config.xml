@@ -91,9 +91,10 @@
     </property>
   </bean>
 
-  <!-- 拦截器 -->
+  <!-- 拦截器 
   <mvc:interceptors>  
     <bean class="org.yuan.project.platform.other.LogInterceptor"/>  
   </mvc:interceptors>
+  -->
   
 </beans>

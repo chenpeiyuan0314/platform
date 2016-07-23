@@ -2,6 +2,8 @@ package org.yuan.project.platform.controller;
 
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -12,6 +14,8 @@ import org.yuan.project.platform.helper.CodeHelper;
 import org.yuan.project.platform.helper.DateHelper;
 import org.yuan.project.platform.model.ClientJson;
 import org.yuan.project.platform.model.ResultJson;
+import org.yuan.project.platform.other.CheckExceptionMessage;
+import org.yuan.project.platform.other.CheckRuntimeException;
 
 @Controller
 @RequestMapping("/v1/client")
@@ -19,23 +23,37 @@ public class ClientController extends BaseController {
 
 	@ResponseBody
 	@RequestMapping("login.json")
-	public ResultJson loginJson(String username, String password) {
-		// 校验参数 - 电话，密码、用户
-		CheckHelper.checkPhone(username);
-		CheckHelper.checkPassword(password);
-		Client client = CheckHelper.checkLogin(username, password);
-		
-		// 添加令牌对象
-		Date date = new Date();
-		Token token = new Token();
-		token.setClientId(client.getId());
-		token.setCode(CodeHelper.token());
-		token.setCreateDate(DateHelper.format(date, DateHelper.FMT_DATETIMEMS));
-		date = DateHelper.alertDay(date, 30);
-		token.setAbadeDate(DateHelper.format(date, DateHelper.FMT_DATETIMEMS));
-		clientManager.insertSelective(token);
-		
+	public ResultJson loginJson(HttpServletRequest request) {
 		ResultJson result = new ResultJson();
+		
+		try {
+			
+			log(request);
+			
+			// 获取参数
+			String username = request.getParameter("username");
+			String password = request.getParameter("password");
+			
+			// 校验参数 - 电话，密码、用户
+			CheckHelper.checkPhone(username);
+			CheckHelper.checkPassword(password);
+			Client client = CheckHelper.checkLogin(username, password);
+			
+			// 添加令牌对象
+			Date date = new Date();
+			Token token = new Token();
+			token.setClientId(client.getId());
+			token.setCode(CodeHelper.token());
+			token.setCreateDate(DateHelper.format(date, DateHelper.FMT_DATETIMEMS));
+			date = DateHelper.alertDay(date, 30);
+			token.setAbadeDate(DateHelper.format(date, DateHelper.FMT_DATETIMEMS));
+			clientManager.insertSelective(token);
+			
+		} catch(Exception e) {
+			exc(result, e);
+		}
+		
+		log(result);
 		return result;
 	}
 	
