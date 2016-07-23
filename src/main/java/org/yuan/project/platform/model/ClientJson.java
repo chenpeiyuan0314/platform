@@ -23,6 +23,7 @@ public class ClientJson {
 	public void setUsername(Client client) {
 		if(client.getUsername() != null) {
 			setUsername(client.getUsername());
+			return;
 		}
 		
 		String phone = client.getPhone();

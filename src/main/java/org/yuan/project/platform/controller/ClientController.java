@@ -37,7 +37,7 @@ public class ClientController extends BaseController {
 			// 校验参数 - 电话，密码、用户
 			CheckHelper.checkPhone(username);
 			CheckHelper.checkPassword(password);
-			Client client = CheckHelper.checkLogin(username, password);
+			Client client = CheckHelper.checkLogin(username, CodeHelper.sha(password));
 			
 			// 添加令牌对象
 			Date date = new Date();
@@ -84,7 +84,7 @@ public class ClientController extends BaseController {
 			// 添加用户对象
 			Client client = new Client();
 			client.setPhone(username);
-			client.setPassword(password);
+			client.setPassword(CodeHelper.sha(password));
 			clientManager.insertSelective(client);
 			
 		} catch(Exception e) {
@@ -148,6 +148,79 @@ public class ClientController extends BaseController {
 			clientJson.setUsername(client);
 			clientJson.setToken(token.getCode());
 			result.getData().put("client", clientJson);
+			
+		} catch(Exception e) {
+			exc(result, e);
+		}
+		
+		log(result);
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping("alterPassword.json")
+	public ResultJson alterPasswordJson(HttpServletRequest request) {
+		ResultJson result = new ResultJson();
+		
+		try {
+			
+			log(request);
+			
+			// 获取参数
+			String code = request.getParameter("token");
+			String oldPassword = request.getParameter("oldPassword");
+			String newPassword = request.getParameter("newPassword");
+			
+			// 验证参数 - 令牌
+			Token token = CheckHelper.checkToken(code);
+			Client client = clientManager.selectClient(token.getClientId());
+			if(!client.getPassword().equals(CodeHelper.sha(oldPassword))) {
+				throw new CheckRuntimeException(CheckExceptionMessage.CODE_10008);
+			}
+			CheckHelper.checkPassword(newPassword);
+			if(newPassword.equals(oldPassword)) {
+				throw new CheckRuntimeException(CheckExceptionMessage.CODE_10009);
+			}
+			
+			// 保存新密码
+			Client record = new Client();
+			record.setId(client.getId());
+			record.setPassword(CodeHelper.sha(newPassword));
+			clientManager.updateSelective(record);
+			
+		} catch(Exception e) {
+			exc(result, e);
+		}
+		
+		log(result);
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping("alterDetail.json")
+	public ResultJson alterDetailJson(HttpServletRequest request) {
+		ResultJson result = new ResultJson();
+		
+		try {
+			
+			log(request);
+			
+			// 获取参数
+			String code = request.getParameter("token");
+			String username = request.getParameter("username");
+			
+			// 验证参数 - 令牌
+			Token token = CheckHelper.checkToken(code);
+			CheckHelper.checkUsername(username);
+			
+			// 获取用户信息
+			Client client = clientManager.selectClient(token.getClientId());
+			
+			// 保存修改信息
+			Client record = new Client();
+			record.setId(client.getId());
+			record.setUsername(username);
+			clientManager.updateSelective(record);
 			
 		} catch(Exception e) {
 			exc(result, e);

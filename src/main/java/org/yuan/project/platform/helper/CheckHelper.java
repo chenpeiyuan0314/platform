@@ -7,10 +7,11 @@ import static org.yuan.project.platform.other.CheckExceptionMessage.CODE_10004;
 import static org.yuan.project.platform.other.CheckExceptionMessage.CODE_10005;
 import static org.yuan.project.platform.other.CheckExceptionMessage.CODE_10006;
 import static org.yuan.project.platform.other.CheckExceptionMessage.CODE_10007;
+import static org.yuan.project.platform.other.CheckExceptionMessage.CODE_10010;
+import static org.yuan.project.platform.other.CheckExceptionMessage.CODE_10011;
 
 import java.util.Date;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.yuan.project.platform.entity.Client;
 import org.yuan.project.platform.entity.Token;
 import org.yuan.project.platform.manager.ClientManager;
@@ -51,6 +52,23 @@ public class CheckHelper {
 				continue;
 			}
 			throw new CheckRuntimeException(CODE_10003);
+		}
+	}
+	
+	/**
+	 * 验证账号名称
+	 * @param password
+	 */
+	public static void checkUsername(String username) {
+		if(username == null || !username.matches("^.{6,20}$")) {
+			throw new CheckRuntimeException(CODE_10010);
+		}
+		
+		for(char ch : username.toCharArray()) {
+			if(Character.isLetter(ch)) {
+				continue;
+			}
+			throw new CheckRuntimeException(CODE_10011);
 		}
 	}
 	

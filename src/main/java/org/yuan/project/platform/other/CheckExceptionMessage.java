@@ -20,6 +20,10 @@ public class CheckExceptionMessage {
 	public static final int CODE_10005 = 10005;
 	public static final int CODE_10006 = 10006;
 	public static final int CODE_10007 = 10007;
+	public static final int CODE_10008 = 10008;
+	public static final int CODE_10009 = 10009;
+	public static final int CODE_10010 = 10010;
+	public static final int CODE_10011 = 10011;
 	
 	//-------------------------------------------------------
 	// 错误信息
@@ -32,12 +36,16 @@ public class CheckExceptionMessage {
 		
 		INFO.put(CODE_10000, "程序运行错误");
 		INFO.put(CODE_10001, "手机号码错误");
-		INFO.put(CODE_10002, "密码必须6-20位");
+		INFO.put(CODE_10002, "密码必须6-20位字符");
 		INFO.put(CODE_10003, "密码必须包含数字和字母");
 		INFO.put(CODE_10004, "用户名已经被注册");
 		INFO.put(CODE_10005, "用户名或密码错误");
 		INFO.put(CODE_10006, "用户令牌已经失效");
 		INFO.put(CODE_10007, "用户令牌不能为空");
+		INFO.put(CODE_10008, "旧密码错误");
+		INFO.put(CODE_10009, "新旧密码不能相同");
+		INFO.put(CODE_10010, "帐号名称必须6-20位字符");
+		INFO.put(CODE_10011, "帐号名称必须由字母组成");
 	}
 	
 	/**
