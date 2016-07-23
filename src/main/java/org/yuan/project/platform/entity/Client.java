@@ -9,6 +9,8 @@ public class Client {
 
     private String phone;
 
+    private String createDate;
+
     public Integer getId() {
         return id;
     }
@@ -39,5 +41,13 @@ public class Client {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
     }
 }

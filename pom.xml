@@ -70,7 +70,7 @@
       <url>http://snapshots.repository.codehaus.org/</url>
     </repository>
     <repository>
-      <id>eight</id>
+      <id>nine</id>
       <url>http://maven.net.cn/content/groups/public/</url>
     </repository>
 

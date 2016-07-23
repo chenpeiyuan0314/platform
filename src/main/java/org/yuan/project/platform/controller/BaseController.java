@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.yuan.project.platform.manager.ClientManager;
+import org.yuan.project.platform.manager.ProductManager;
 import org.yuan.project.platform.model.ResultJson;
 import org.yuan.project.platform.other.CheckExceptionMessage;
 import org.yuan.project.platform.other.CheckRuntimeException;
@@ -18,6 +19,9 @@ public class BaseController {
 
 	@Autowired
 	protected ClientManager clientManager;
+	
+	@Autowired
+	protected ProductManager productManager;
 	
 	
 	//-------------------------------------------------------

@@ -85,6 +85,7 @@ public class ClientController extends BaseController {
 			Client client = new Client();
 			client.setPhone(username);
 			client.setPassword(CodeHelper.sha(password));
+			client.setCreateDate(DateHelper.format(new Date(), DateHelper.FMT_DATETIMEMS));
 			clientManager.insertSelective(client);
 			
 		} catch(Exception e) {
