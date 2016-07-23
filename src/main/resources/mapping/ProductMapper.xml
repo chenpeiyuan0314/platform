@@ -118,4 +118,36 @@
       create_date = #{createDate,jdbcType=CHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <!-- 手动添加代码 -->
+  
+  <!-- 
+            根据条件查询记录总数  
+   -->
+  <select id="selectSize" 
+    resultType="java.lang.Integer" 
+    parameterType="java.util.Map" >
+    SELECT 
+      COUNT(1)
+    FROM product
+    <trim prefix="WHERE"  prefixOverrides="AND">
+      <if test="id != null">
+        AND id = #{id}
+      </if>
+    </trim>
+  </select>
+  
+  <!-- 
+    根据条件查询记录列表
+   -->
+  <select id="selectList" 
+    resultMap="ResultMapWithBLOBs" 
+    parameterType="java.util.Map" >
+    SELECT
+      <include refid="Base_Column_List" />
+      ,
+      <include refid="Blob_Column_List" />
+    FROM product
+  </select>
+  
 </mapper>

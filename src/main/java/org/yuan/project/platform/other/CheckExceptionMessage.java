@@ -24,6 +24,8 @@ public class CheckExceptionMessage {
 	public static final int CODE_10009 = 10009;
 	public static final int CODE_10010 = 10010;
 	public static final int CODE_10011 = 10011;
+	public static final int CODE_10012 = 10012;
+	public static final int CODE_10013 = 10013;
 	
 	//-------------------------------------------------------
 	// 错误信息
@@ -46,6 +48,8 @@ public class CheckExceptionMessage {
 		INFO.put(CODE_10009, "新旧密码不能相同");
 		INFO.put(CODE_10010, "帐号名称必须6-20位字符");
 		INFO.put(CODE_10011, "帐号名称必须由字母组成");
+		INFO.put(CODE_10012, "商品分类类型错误");
+		INFO.put(CODE_10013, "商品标识无效");
 	}
 	
 	/**

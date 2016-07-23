@@ -9,12 +9,15 @@ import static org.yuan.project.platform.other.CheckExceptionMessage.CODE_10006;
 import static org.yuan.project.platform.other.CheckExceptionMessage.CODE_10007;
 import static org.yuan.project.platform.other.CheckExceptionMessage.CODE_10010;
 import static org.yuan.project.platform.other.CheckExceptionMessage.CODE_10011;
+import static org.yuan.project.platform.other.CheckExceptionMessage.CODE_10012;
+import static org.yuan.project.platform.other.CheckExceptionMessage.CODE_10013;
 
 import java.util.Date;
 
 import org.yuan.project.platform.entity.Client;
 import org.yuan.project.platform.entity.Token;
 import org.yuan.project.platform.manager.ClientManager;
+import org.yuan.project.platform.manager.ProductManager;
 import org.yuan.project.platform.other.CheckRuntimeException;
 
 public class CheckHelper {
@@ -113,6 +116,23 @@ public class CheckHelper {
 			throw new CheckRuntimeException(CODE_10004);
 		}
 	}
+	
+	public static void checkShowType(String type) {
+		if(isBlank(type) || !"1".equals(type)) {
+			throw new CheckRuntimeException(CODE_10012);
+		}
+	}
+	
+	public static void checkProductId(String productId) {
+		if(isBlank(productId) || !productId.matches("\\d+")) {
+			throw new CheckRuntimeException(CODE_10013);
+		}
+		Integer id = Integer.valueOf(productId);
+		if(productManager.selectProductSize(id) != 1) {
+			throw new CheckRuntimeException(CODE_10013);
+		}
+		
+	}
 
 	/**
 	 * 判断字符串是否为空
@@ -132,5 +152,10 @@ public class CheckHelper {
 	private static ClientManager clientManager;
 	public void setClientManager(ClientManager clientManager) {
 		CheckHelper.clientManager = clientManager;
+	}
+	
+	private static ProductManager productManager;
+	public void setProductManager(ProductManager productManager) {
+		CheckHelper.productManager = productManager;
 	}
 }

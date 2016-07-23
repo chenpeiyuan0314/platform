@@ -1,6 +1,8 @@
 package org.yuan.project.platform.manager.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,8 +15,9 @@ public class ProductManagerImpl extends BaseManagerImpl implements ProductManage
 
 	@Override
 	public List<Product> selectProductList(Integer type) {
-		// TODO Auto-generated method stub
-		return null;
+		Map<String,Object> args = new HashMap<String,Object>();
+		List<Product> list = productMapper.selectList(args);
+		return list;
 	}
 
 	@Override
@@ -22,5 +25,14 @@ public class ProductManagerImpl extends BaseManagerImpl implements ProductManage
 		Product item = productMapper.selectByPrimaryKey(id);
 		return item;
 	}
+
+	@Override
+	public int selectProductSize(Integer id) {
+		Map<String,Object> args = new HashMap<String,Object>();
+		args.put("id", id);
+		int size = productMapper.selectSize(args);
+		return size;
+	}
+	
 	
 }

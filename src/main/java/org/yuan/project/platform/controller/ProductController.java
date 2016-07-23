@@ -30,7 +30,7 @@ public class ProductController extends BaseController {
 			String type = request.getParameter("type");
 			
 			// 校验参数 - 
-			//CheckHelper.checkProductType(type);
+			CheckHelper.checkShowType(type);
 			
 			// 处理请求
 			List<Product> products = productManager.selectProductList(Integer.valueOf(type));
@@ -64,7 +64,7 @@ public class ProductController extends BaseController {
 			String id = request.getParameter("productId");
 			
 			// 校验参数 - 
-			//CheckHelper.checkProductId(id);
+			CheckHelper.checkProductId(id);
 			
 			// 处理请求
 			Product product = productManager.selectProduct(Integer.valueOf(id));

@@ -19,4 +19,11 @@ public interface ProductManager {
 	 * @return
 	 */
 	Product selectProduct(Integer id);
+	
+	/**
+	 * 根据商品标识获取商品总数
+	 * @param id
+	 * @return
+	 */
+	int selectProductSize(Integer id);
 }
