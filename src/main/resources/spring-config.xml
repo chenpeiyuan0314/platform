@@ -63,6 +63,10 @@
     <property name="clientManager" ref="clientManager"/>
   </bean>
   
+  <bean class="org.yuan.project.platform.helper.CheckHelper">
+    <property name="clientManager" ref="clientManager"/>
+  </bean>
+  
   <!-- 扫描控制层 -->
   <context:component-scan base-package="org.yuan.project.platform.controller" />
 

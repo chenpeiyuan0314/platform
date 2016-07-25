@@ -118,6 +118,7 @@
       create_date = #{createDate,jdbcType=CHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+<<<<<<< HEAD
   
   <!-- 手动添加代码 -->
   
@@ -150,4 +151,6 @@
     FROM product
   </select>
   
+=======
+>>>>>>> refs/remotes/origin/master
 </mapper>

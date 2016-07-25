@@ -34,5 +34,4 @@ public class ProductManagerImpl extends BaseManagerImpl implements ProductManage
 		return size;
 	}
 	
-	
 }

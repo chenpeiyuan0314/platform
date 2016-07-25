@@ -116,23 +116,6 @@ public class CheckHelper {
 			throw new CheckRuntimeException(CODE_10004);
 		}
 	}
-	
-	public static void checkShowType(String type) {
-		if(isBlank(type) || !"1".equals(type)) {
-			throw new CheckRuntimeException(CODE_10012);
-		}
-	}
-	
-	public static void checkProductId(String productId) {
-		if(isBlank(productId) || !productId.matches("\\d+")) {
-			throw new CheckRuntimeException(CODE_10013);
-		}
-		Integer id = Integer.valueOf(productId);
-		if(productManager.selectProductSize(id) != 1) {
-			throw new CheckRuntimeException(CODE_10013);
-		}
-		
-	}
 
 	/**
 	 * 判断字符串是否为空
@@ -149,6 +132,31 @@ public class CheckHelper {
 		return false;
 	}
 	
+	/**
+	 * 校验显示类型
+	 * @param type
+	 */
+	public static void checkShowType(String type) {
+		if(isBlank(type) || !"1".equals(type)) {
+			throw new CheckRuntimeException(CODE_10012);
+		}
+	}
+	
+	/**
+	 * 校验商品标识
+	 * @param productId
+	 */
+	public static void checkProductId(String productId) {
+		if(isBlank(productId) || !productId.matches("\\d+")) {
+			throw new CheckRuntimeException(CODE_10013);
+		}
+		Integer id = Integer.valueOf(productId);
+		if(productManager.selectProductSize(id) != 1) {
+			throw new CheckRuntimeException(CODE_10013);
+		}
+		
+	}
+
 	private static ClientManager clientManager;
 	public void setClientManager(ClientManager clientManager) {
 		CheckHelper.clientManager = clientManager;
