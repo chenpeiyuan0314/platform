@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.yuan.project.platform.entity.Client;
 import org.yuan.project.platform.entity.Token;
-import org.yuan.project.platform.helper.CodeHelper;
 import org.yuan.project.platform.manager.ClientManager;
 
 @Service("clientManager")
